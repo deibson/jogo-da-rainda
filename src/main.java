@@ -12,11 +12,8 @@ public class main {
         operacaoRainha.imprimir(tabuleiro);
         while (ctrl) {
             jogada = operacaoRainha.lancarRainha(tabuleiro, jogada);
-            if (jogada == 8) {
+            if (jogada == 8 || jogada == 0) {
                 System.out.println("\n\t\t*********PARABENS VOCÊ*********\n\t\t*******JOGO ENCERRADO********");
-                ctrl = false;
-            } else if (jogada == 0) {
-                System.out.println("\n\t\t*********VOCÊ PERDEU*********\n\t\t*******JOGO ENCERRADO********");
                 ctrl = false;
             }
         }
