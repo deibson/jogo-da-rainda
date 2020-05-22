@@ -183,6 +183,7 @@ public class Operacao {
 
     private boolean printAjuda(int linha, int coluna) {
         analisarLancamento(linha, coluna);
+        System.out.println("Nas posições onde tiver (0) são posições de conflito.");
         imprimir(tabuleiroAjuda);
         int key = 1;
         for (int l = 0; l < 8; l++) {
