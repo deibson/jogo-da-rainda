@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Operacao {
 
     private boolean ctrl;
+    private String peca;
     private int countAjuda = 0;
     char[][] tabuleiroAjuda = new char[8][8];
     private Map<Integer, Rainha> posicaoRainha = new HashMap<Integer, Rainha>();
@@ -14,9 +15,9 @@ public class Operacao {
         Rainha rainha = new Rainha(linha, coluna);
         posicaoRainha.put(key, rainha);
         if (key > 1) {
-            System.out.println("\nRainhas: Você já lançou " + key + " rainhas.");
+            System.out.println("\nRainhas: Você lançou " + key + " rainhas.");
         } else {
-            System.out.println("\nRainha: Você já lançou " + key + " rainha.");
+            System.out.println("\nRainha: Você lançou " + key + " rainha.");
         }
         System.out.println("Rainhas: " + posicaoRainha.toString());
     }
@@ -42,13 +43,37 @@ public class Operacao {
     private boolean validarEntrada(char[][] tabuleiro, int linha, int coluna) {
 
         if (linha < 0 || linha >= 8 || coluna < 0 || coluna >= 8) {
-            System.out.println("Os valores não correspondem ao esperados por favor informe novamente.");
-            System.out.println("Valores entre 1 e 8");
+            System.out.println("Os valores não correspondem ao esperados por favor informe novamente.\nValores entre 1 e 8");
             return false;
         } else if (tabuleiro[linha][coluna] == '#') {
-            System.out.println("Celula ja informada anteriormente.");
+            System.out.println("Posição informada anteriormente, Tente novamente.");
             return false;
         } else return true;
+    }
+
+    private boolean verificarPeca() {
+        if (peca.length() != 1) return false;
+        switch (peca) {
+            case "b":
+                peca = "B";
+                break;
+            case "B":
+                break;
+            case "r":
+                peca = "R";
+                break;
+            case "R":
+                break;
+            case "t":
+                peca = "T";
+                break;
+            case "T":
+                break;
+            default:
+                System.out.println("\nPor favor informe a peça conforme descrito no enunciado.");
+                return false;
+        }
+        return true;
     }
 
     public int lancarRainha(char[][] tabuleiro, int jogada) {
@@ -56,6 +81,14 @@ public class Operacao {
         int linha, coluna;
         boolean lancamento;
         Scanner input = new Scanner(System.in);
+        if (jogada == 0) {
+            do {
+                System.out.print("\nPor Favor selecione a peça que deseja jogar\n" +
+                        "Informe: B para Bispo, R para Rainha, T para Torre: ");
+                peca = input.next();
+            } while (!verificarPeca());
+            imprimir(tabuleiro);
+        }
 
         do {
             if (jogada > 0 && countAjuda < 2)
@@ -92,26 +125,29 @@ public class Operacao {
         Rainha rainhaLancada = new Rainha(linha, coluna);
 
         for (Rainha rainha : posicaoRainha.values()) {
-            if (rainha.compareTo(rainhaLancada) == 0) {
-                printMensagem(rainha);
-                break;
-            } else if (linha == 8 && coluna == 8) {
+            if (peca.equals("T") || peca.equals("R")) {
+                if (rainha.compareTo(rainhaLancada) == 0) {
+                    printMensagem(rainha);
+                    break;
+                } else if (linha == 8 && coluna == 8) {
 
-                tabuleiroAjuda[rainha.getLinha()][rainha.getColuna()] = '#';
+                    tabuleiroAjuda[rainha.getLinha()][rainha.getColuna()] = '#';
 
-                for (int c = 0; c < 8; c++)
-                    if (rainha.getColuna() != c)
-                        tabuleiroAjuda[rainha.getLinha()][c] = '0';
+                    for (int c = 0; c < 8; c++)
+                        if (rainha.getColuna() != c)
+                            tabuleiroAjuda[rainha.getLinha()][c] = '0';
 
-                for (int l = 0; l < 8; l++)
-                    if (rainha.getLinha() != l)
-                        tabuleiroAjuda[l][rainha.getColuna()] = '0';
+                    for (int l = 0; l < 8; l++)
+                        if (rainha.getLinha() != l)
+                            tabuleiroAjuda[l][rainha.getColuna()] = '0';
+                }
             }
-
-            verificarDiagonalDireitaProgessiva(linha, coluna, rainha);
-            verificarDiagonalDireitaRegressiva(linha, coluna, rainha);
-            verificarDiagonalEsquerdaProgressiva(linha, coluna, rainha);
-            verificarDiagonalEsquerdaRegressiva(linha, coluna, rainha);
+            if (peca.equals("B") || peca.equals("R")) {
+                verificarDiagonalDireitaProgessiva(linha, coluna, rainha);
+                verificarDiagonalDireitaRegressiva(linha, coluna, rainha);
+                verificarDiagonalEsquerdaProgressiva(linha, coluna, rainha);
+                verificarDiagonalEsquerdaRegressiva(linha, coluna, rainha);
+            }
         }
     }
 

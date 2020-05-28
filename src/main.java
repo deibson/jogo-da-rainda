@@ -9,7 +9,6 @@ public class main {
         Operacao operacaoRainha = new Operacao();
 
         operacaoRainha.montarTabuleiro(tabuleiro);
-        operacaoRainha.imprimir(tabuleiro);
         while (ctrl) {
             jogada = operacaoRainha.lancarRainha(tabuleiro, jogada);
             if (jogada == 8) {
