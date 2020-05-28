@@ -23,7 +23,7 @@ public class Operacao {
     }
 
     public void imprimir(char[][] tabuleiro) {
-        System.out.println("\n\n\t1 \t2 \t3 \t4 \t5 \t6 \t7 \t8\n");
+        System.out.println("\n\t1 \t2 \t3 \t4 \t5 \t6 \t7 \t8\n");
 
         for (int linha = 0; linha < 8; linha++) {
             System.out.print(linha + 1);
@@ -93,7 +93,7 @@ public class Operacao {
         do {
             if (jogada > 0 && countAjuda < 2)
                 System.out.print("\nApós a Segunda jogada você poderá imprimir o tabuleiro de ajuda 2 vezes,\n" +
-                        "basta informar o numero 9 na linha e/ou coluna.\n");
+                        "basta informar o numero 9 na linha e na coluna.\n");
 
             System.out.print("\nInforme a Linha: ");
             linha = input.nextInt() - 1;
@@ -130,7 +130,6 @@ public class Operacao {
                     printMensagem(rainha);
                     break;
                 } else if (linha == 8 && coluna == 8) {
-
                     tabuleiroAjuda[rainha.getLinha()][rainha.getColuna()] = '#';
 
                     for (int c = 0; c < 8; c++)
@@ -143,6 +142,8 @@ public class Operacao {
                 }
             }
             if (peca.equals("B") || peca.equals("R")) {
+                tabuleiroAjuda[rainha.getLinha()][rainha.getColuna()] = '#';
+
                 verificarDiagonalDireitaProgessiva(linha, coluna, rainha);
                 verificarDiagonalDireitaRegressiva(linha, coluna, rainha);
                 verificarDiagonalEsquerdaProgressiva(linha, coluna, rainha);
@@ -219,7 +220,9 @@ public class Operacao {
 
     private boolean printAjuda(int linha, int coluna) {
         analisarLancamento(linha, coluna);
-        System.out.println("Nas posições onde tiver (0) são posições de conflito.");
+        System.out.println("--------------------ATENÇÃO--------------------\n" +
+                "Nas posições onde tiver (0) são posições de conflito.\n" +
+                "Nas posições onde tiver (-) são posicções livres.");
         imprimir(tabuleiroAjuda);
         int key = 1;
         for (int l = 0; l < 8; l++) {
