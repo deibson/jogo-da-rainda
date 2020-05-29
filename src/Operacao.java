@@ -6,6 +6,7 @@ public class Operacao {
 
     private boolean ctrl;
     private String peca;
+    private String nomePeca;
     private int countAjuda = 0;
     char[][] tabuleiroAjuda = new char[8][8];
     private Map<Integer, Rainha> posicaoRainha = new HashMap<Integer, Rainha>();
@@ -15,11 +16,11 @@ public class Operacao {
         Rainha rainha = new Rainha(linha, coluna);
         posicaoRainha.put(key, rainha);
         if (key > 1) {
-            System.out.println("\nRainhas: Você lançou " + key + " rainhas.");
+            System.out.println("\n"+ nomePeca +"s: Você lançou " + key + " " + nomePeca + "s.");
         } else {
-            System.out.println("\nRainha: Você lançou " + key + " rainha.");
+            System.out.println("\n"+ nomePeca + ": Você lançou " + key + " " + nomePeca);
         }
-        System.out.println("Rainhas: " + posicaoRainha.toString());
+        System.out.println(nomePeca + "s: " + posicaoRainha.toString());
     }
 
     public void imprimir(char[][] tabuleiro) {
@@ -56,16 +57,19 @@ public class Operacao {
         switch (peca) {
             case "b":
                 peca = "B";
+                nomePeca = "Bispo";
                 break;
             case "B":
                 break;
             case "r":
                 peca = "R";
+                nomePeca = "Rainha";
                 break;
             case "R":
                 break;
             case "t":
                 peca = "T";
+                nomePeca = "Torre";
                 break;
             case "T":
                 break;
@@ -215,7 +219,7 @@ public class Operacao {
 
     private void printMensagem(Rainha rainha) {
         ctrl = false;
-        System.out.println("\nVocê comprometeu o jogo,\nExiste uma rainha na posicao [ linha: " + (rainha.getLinha() + 1) + ", coluna: " + (rainha.getColuna() + 1) + " ]");
+        System.out.println("\nVocê comprometeu o jogo,\nExiste "+ nomePeca + " na posicao [ linha: " + (rainha.getLinha() + 1) + ", coluna: " + (rainha.getColuna() + 1) + " ]");
     }
 
     private boolean printAjuda(int linha, int coluna) {
